@@ -11,16 +11,21 @@ impl Vec3 {
         (self.e[0], self.e[1], self.e[2])
     }
 
-    fn xyz(&self) -> (f64, f64, f64) {
+    pub fn xyz(&self) -> (f64, f64, f64) {
         (self.e[0], self.e[1], self.e[2])
     }
 
-    fn lenght(&self) -> f64 {
+    fn length(&self) -> f64 {
         (self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]).sqrt()
     }
     
     fn squared_lenght(&self) -> f64 {
         self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]
+    }
+
+    pub fn unit_vector(v: &Vec3) -> Vec3 {
+        let copy = Vec3::new(v.e[0], v.e[1], v.e[2]);
+        copy / v.length()
     }
 }
 
@@ -62,6 +67,23 @@ impl std::ops::SubAssign for Vec3 {
     }
 }
 
+impl std::ops::Mul for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: Self) -> Self {
+        Vec3::new(self.e[0] * rhs.e[0], self.e[1] * rhs.e[1], self.e[2] * rhs.e[2])        
+    }
+}
+
+impl std::ops::Mul<f64> for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: f64) -> Self {
+        Vec3::new(self.e[0] * rhs, self.e[1] * rhs, self.e[2] * rhs)        
+    }
+}
+
+
 impl std::ops::MulAssign for Vec3 {
     fn mul_assign(&mut self, rhs: Self) {
         self.e[0] *= rhs.e[0];        
@@ -75,6 +97,17 @@ impl std::ops::MulAssign<f64> for Vec3 {
         self.e[0] *= rhs;        
         self.e[1] *= rhs;        
         self.e[2] *= rhs;        
+    }
+}
+
+impl std::ops::Div<f64> for Vec3 {
+    type Output = Vec3;
+
+    fn div(mut self, rhs: f64) -> Vec3 {
+        self.e[0] /= rhs;        
+        self.e[1] /= rhs;        
+        self.e[2] /= rhs;        
+        self
     }
 }
 
@@ -168,5 +201,11 @@ mod tests {
         assert!(vec[RGB::R]  == vec.rgb().0);
         assert!(vec[RGB::G]  == vec.rgb().1);
         assert!(vec[RGB::B]  == vec.rgb().2);
+    }
+
+    #[test]
+    fn test_unit_vector() {
+        let vec = Vec3::new(0.0, 1.1, 2.2);
+        assert_ne!(Vec3::unit_vector(&vec), vec);
     }
 }
