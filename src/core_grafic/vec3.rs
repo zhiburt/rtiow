@@ -136,3 +136,37 @@ fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
                     -(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0]),
                       v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_grb() {
+        assert_eq!(Vec3::new(0.0, 1.1, 2.2).rgb(), (0.0, 1.1, 2.2));
+    }
+
+    #[test]
+    fn test_xyz() {
+        assert_eq!(Vec3::new(0.0, 1.1, 2.2).xyz(), (0.0, 1.1, 2.2));
+    }
+    
+    #[test]
+    fn test_add() {
+        assert_eq!(Vec3::new(0.0, 1.1, 2.2) + Vec3::new(0.0, 1.1, 2.2), Vec3::new(0.0, 2.2, 4.4));
+    }
+
+    #[test]
+    fn test_eq_and_neq() {
+        assert!(Vec3::new(0.0, 1.1, 2.2)  != Vec3::new(0.0, 0.0, 0.0));
+        assert!(Vec3::new(0.0, 1.1, 2.2)  == Vec3::new(0.0, 1.1, 2.2));
+    }
+
+    #[test]
+    fn test_index() {
+        let vec = Vec3::new(0.0, 1.1, 2.2);
+        assert!(vec[RGB::R]  == vec.rgb().0);
+        assert!(vec[RGB::G]  == vec.rgb().1);
+        assert!(vec[RGB::B]  == vec.rgb().2);
+    }
+}
