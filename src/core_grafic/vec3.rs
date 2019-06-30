@@ -128,7 +128,7 @@ impl std::fmt::Debug for Vec3 {
 }
 
 fn dot(v1: &Vec3, v2: &Vec3) -> f64 {
-    v1[RGB::R] * v1[RGB::R] + v1[RGB::G] * v1[RGB::G] + v1[RGB::B] * v1[RGB::B]  
+    v1[RGB::R] * v2[RGB::R] + v1[RGB::G] * v2[RGB::G] + v1[RGB::B] * v2[RGB::B]  
 }
 
 fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
