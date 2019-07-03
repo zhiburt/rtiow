@@ -27,6 +27,10 @@ impl Vec3 {
         let copy = Vec3::new(v.e[0], v.e[1], v.e[2]);
         copy / v.length()
     }
+
+    pub fn copy(v: &Vec3) -> Vec3{
+        Vec3::new(v.e[0], v.e[1], v.e[2])
+    }
 }
 
 impl std::ops::Add<Vec3> for Vec3 {
@@ -160,11 +164,11 @@ impl std::fmt::Debug for Vec3 {
     }
 }
 
-fn dot(v1: &Vec3, v2: &Vec3) -> f64 {
+pub fn dot(v1: &Vec3, v2: &Vec3) -> f64 {
     v1[RGB::R] * v2[RGB::R] + v1[RGB::G] * v2[RGB::G] + v1[RGB::B] * v2[RGB::B]  
 }
 
-fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
+pub fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
     Vec3::new(v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1],
                     -(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0]),
                       v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])

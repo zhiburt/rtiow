@@ -1,9 +1,25 @@
 mod core_grafic;
 
-use core_grafic::vec3::{RGB, Vec3};
+use core_grafic::vec3::{RGB, Vec3, dot};
 use core_grafic::ray::Ray;
 
-fn color(r: Ray) -> Vec3 {
+fn hit_sphere(center: &Vec3, radius: f64, r: &Ray) -> bool {
+    let (ray_origin_cp, center_cp) = (Vec3::copy(r.origin()), Vec3::copy(center));
+
+    let oc = &(ray_origin_cp - center_cp);
+    let a = dot(r.direction(), r.direction());
+    let b = 2.0 *  dot(oc, r.direction());
+    let c = dot(oc, oc) - radius * radius;
+    let discriminant = b*b - 4.0*a*c;
+
+    return discriminant > 0.0;
+}
+
+fn color(r: &Ray) -> Vec3 {
+    if hit_sphere(&Vec3::new(0.0, 0.0, -1.0), 0.5_f64, r) {
+        return Vec3::new(1.0, 0.0, 0.0);
+    }
+
     let unit_direction =  Vec3::unit_vector(r.direct);
     let (_, y, _) = unit_direction.xyz();
     let t = 0.5 *  (y  + 1.0);
@@ -31,7 +47,7 @@ fn main() {
 
             let t = llc + hor * u + ver * v;
             let r = Ray::new(&origin, &t);
-            let vec = color(r);
+            let vec = color(&r);
 
             println!("{} {} {}", (vec[RGB::R] * offset) as isize, (vec[RGB::G] * offset) as isize, (vec[RGB::B] * offset) as isize);
         }
