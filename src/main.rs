@@ -3,7 +3,7 @@ mod core_grafic;
 use core_grafic::vec3::{RGB, Vec3, dot};
 use core_grafic::ray::Ray;
 
-fn hit_sphere(center: &Vec3, radius: f64, r: &Ray) -> bool {
+fn hit_sphere(center: &Vec3, radius: f64, r: &Ray) -> f64 {
     let (ray_origin_cp, center_cp) = (Vec3::copy(r.origin()), Vec3::copy(center));
 
     let oc = &(ray_origin_cp - center_cp);
@@ -11,13 +11,18 @@ fn hit_sphere(center: &Vec3, radius: f64, r: &Ray) -> bool {
     let b = 2.0 *  dot(oc, r.direction());
     let c = dot(oc, oc) - radius * radius;
     let discriminant = b*b - 4.0*a*c;
+    if discriminant < 0.0 {
+        return -1.0;
+    }
 
-    return discriminant > 0.0;
+    return (-b - discriminant.sqrt()) / (2.0*a);
 }
 
 fn color(r: &Ray) -> Vec3 {
-    if hit_sphere(&Vec3::new(0.0, 0.0, -1.0), 0.5_f64, r) {
-        return Vec3::new(1.0, 0.0, 0.0);
+    let t = hit_sphere(&Vec3::new(0.0, 0.0, -1.0), 0.5_f64, r);
+    if t > 0.0 {
+        let N = Vec3::unit_vector(&(r.point_at(t) - Vec3::new(0.0, 0.0, -1.0)));
+        return Vec3::new(N.xyz().0+1.0, N.xyz().1+1.0, N.xyz().2+1.0) * 0.5;
     }
 
     let unit_direction =  Vec3::unit_vector(r.direct);
