@@ -1,21 +1,21 @@
 use super::vec3::{Vec3, RGB};
 
-pub struct Ray<'a> {
-    pub orig: &'a Vec3,
-    pub direct: &'a Vec3,
+pub struct Ray {
+    pub orig: Vec3,
+    pub direct: Vec3,
 }
 
-impl<'a> Ray<'a> {
+impl<'a> Ray {
     pub fn new(a: &'a Vec3, b: &'a Vec3) -> Self {
-        Ray{orig: a, direct: b}
+        Ray{orig: Vec3::copy(a), direct: Vec3::copy(b)}
     }
 
     pub fn origin(&self) -> &Vec3 {
-        self.orig
+        &self.orig
     }
     
     pub fn direction(&self) -> &Vec3 {
-        self.direct
+        &self.direct
     }
 
     pub fn point_at(&self, t: f64) -> Vec3 { 
