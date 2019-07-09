@@ -15,11 +15,11 @@ impl Vec3 {
         (self.e[0], self.e[1], self.e[2])
     }
 
-    fn length(&self) -> f64 {
+    pub fn length(&self) -> f64 {
         (self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]).sqrt()
     }
     
-    fn squared_lenght(&self) -> f64 {
+    pub fn squared_lenght(&self) -> f64 {
         self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]
     }
 

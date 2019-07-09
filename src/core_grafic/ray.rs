@@ -10,6 +10,10 @@ impl<'a> Ray {
         Ray{orig: Vec3::copy(a), direct: Vec3::copy(b)}
     }
 
+    pub fn new_with_move(a: Vec3, b: Vec3) -> Self {
+        Ray{orig: a, direct: b}
+    }
+
     pub fn origin(&self) -> &Vec3 {
         &self.orig
     }
