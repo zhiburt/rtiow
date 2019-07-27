@@ -16,7 +16,7 @@ impl HitableList {
 
 impl Hitable for HitableList {
     fn hit(&self, r: &Ray, t_min: f64, t_max: f64, rec: &mut HitRecord) -> bool {
-        let mut record: HitRecord = HitRecord{t: 0.0, p: Vec3::new(0.0, 0.0, 0.0), normal: Vec3::new(0.0, 0.0, 0.0)};
+        let mut record: HitRecord = HitRecord::new();
         let mut hit_anything = false;
         let mut closest_so_far = t_max;
         for obj in self.list.iter() {
@@ -26,6 +26,7 @@ impl Hitable for HitableList {
                 rec.t = record.t; 
                 rec.p = Vec3::copy(&record.p);
                 rec.normal = Vec3::copy(&record.normal);
+                rec.material = record.material.clone();
             }
         }
 

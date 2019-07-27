@@ -1,17 +1,20 @@
 use super::hitable::{HitRecord, Hitable};
 use super::ray::Ray;
+use super::material::Material;
 use super::vec3::{dot, Vec3};
 
 pub struct Sphere {
     center: Vec3,
     radius: f64,
+    material: std::rc::Rc<Material>,
 }
 
 impl Sphere {
-    pub fn new(c: Vec3, r: f64) -> Sphere {
+    pub fn new(c: Vec3, r: f64, m: std::rc::Rc<Material>) -> Sphere {
         Sphere {
             center: c,
             radius: r,
+            material: m, 
         }
     }
 }
@@ -31,6 +34,7 @@ impl Hitable for Sphere {
                 rec.t = temp;
                 rec.p = r.point_at(rec.t);
                 rec.normal = (Vec3::copy(&rec.p) - Vec3::copy(&self.center)) / self.radius;
+                rec.material = self.material.clone();
 
                 return true;
             }
@@ -39,6 +43,7 @@ impl Hitable for Sphere {
                 rec.t = temp;
                 rec.p = r.point_at(rec.t);
                 rec.normal = (Vec3::copy(&rec.p) - Vec3::copy(&self.center)) / self.radius;
+                rec.material = self.material.clone();
 
                 return true;
             }
