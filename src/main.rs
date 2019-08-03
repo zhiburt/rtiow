@@ -53,8 +53,8 @@ fn main() {
     let mut world = HitableList::new(vec![
         Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5, std::rc::Rc::new(Lambertian::new(Vec3::new(0.8, 0.3, 0.3))))),
         Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0, std::rc::Rc::new(Lambertian::new(Vec3::new(0.8, 0.8, 0.0))))),
-        Box::new(Sphere::new(Vec3::new(1.0, 0.0, -1.0), 0.5, std::rc::Rc::new(Metal::new(Vec3::new(0.8, 0.6, 0.2))))),
-        Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0), 0.5, std::rc::Rc::new(Metal::new(Vec3::new(0.8, 0.8, 0.8))))),
+        Box::new(Sphere::new(Vec3::new(1.0, 0.0, -1.0), 0.5, std::rc::Rc::new(Metal::new(Vec3::new(0.8, 0.6, 0.2), 0.3)))),
+        Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0), 0.5, std::rc::Rc::new(Metal::new(Vec3::new(0.8, 0.8, 0.8), 1.0)))),
     ]);
 
     println!("P3\n{} {} \n255", nx, ny);

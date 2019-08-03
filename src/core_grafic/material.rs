@@ -37,19 +37,20 @@ fn random_in_unit_sphere() -> Vec3 {
 
 #[derive(Clone)]
 pub struct Metal {
-    pub albedo: Vec3
+    pub albedo: Vec3,
+    pub fuzz: f64,
 }
 
 impl Metal{
-    pub fn new(a: Vec3) -> Self {
-        Metal{albedo: a}
+    pub fn new(a: Vec3, fuzz: f64) -> Self {
+        Metal{albedo: a, fuzz}
     }
 }
 
 impl Material for Metal {
     fn scatter(&self, r_in: &Ray, rec: &HitRecord) -> Option<(Vec3, Ray)> {
         let reflected = reflect(&Vec3::unit_vector(r_in.direction()), &rec.normal);
-        let scattered  = Ray::new_with_move(Vec3::copy(&rec.p), reflected);
+        let scattered  = Ray::new_with_move(Vec3::copy(&rec.p), reflected + random_in_unit_sphere() * self.fuzz);
         let attenuation = Vec3::copy(&self.albedo);
         
         match dot(scattered.direction(), &rec.normal) > 0.0 {

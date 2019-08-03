@@ -16,7 +16,7 @@ impl HitRecord {
             t: 0.0,
             p: Vec3::new(0.0, 0.0, 0.0),
             normal: Vec3::new(0.0, 0.0, 0.0),
-            material: Rc::new(Metal::new(Vec3::new(0.0, 0.0, 0.0))),
+            material: Rc::new(Metal::new(Vec3::new(0.0, 0.0, 0.0), 0.0)),
         }
     }
 }
