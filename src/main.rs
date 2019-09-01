@@ -60,7 +60,12 @@ fn main() {
 
     println!("P3\n{} {} \n255", nx, ny);
 
-    let cam: Camera = Camera::new(Vec3::new(-4.0, 2.0, 5.0), Vec3::new(-3.0, 1.0, -1.0), Vec3::new(1.0, 1.0, 0.0), 90.0, nx as f64 / ny as f64);
+
+    let lookfrom = Vec3::new(3.0, 3.0, 2.0);
+    let lookat = Vec3::new(0.0, 0.0, -1.0);
+    let dist_to_focus = (Vec3::copy(&lookfrom) - Vec3::copy(&lookat)).length();
+    let aperture = 2.0;
+    let cam: Camera = Camera::new(lookfrom, lookat, Vec3::new(0.0, 1.0, 0.0), 20.0, nx as f64 / ny as f64, aperture, dist_to_focus);
     for j in (0..ny).rev(){
         for i in 0..nx {
             let mut col = Vec3::new(0.0, 0.0, 0.0);
