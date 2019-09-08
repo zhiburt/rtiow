@@ -65,6 +65,12 @@ pub struct Dielectric {
     pub ref_index: f64,
 }
 
+impl Dielectric {
+    pub fn new(ref_index: f64) -> Self {
+        Dielectric {ref_index}
+    }
+}
+
 impl Material for Dielectric {
     fn scatter(&self, r_in: &Ray, rec: &HitRecord) -> Option<(Vec3, Ray)> {
         let mut outword_normal: Vec3;
